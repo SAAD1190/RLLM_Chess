@@ -11,7 +11,7 @@ from collections import deque
 import matplotlib.pyplot as plt
 
 class QNetwork(nn.Module):
-    def __init__(self, input_size=832, hidden_sizes=[1024, 512], output_size=20480):
+    def __init__(self, input_size=832, hidden_sizes=[512, 256], output_size=20480):
         super(QNetwork, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_sizes[0])
         self.relu1 = nn.ReLU()
@@ -39,10 +39,14 @@ class RLAgent:
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.q_network.to(self.device)
         self.target_network.to(self.device)
-        self.memory = deque(maxlen=50000)
-        self.batch_size = 64
+        # self.memory = deque(maxlen=50000)
+        self.memory = deque(maxlen=10000)  # Reduce the replay memory size
+        self.batch_size = 32 # To reduce memory usage originally 64
         self.learn_step_counter = 0
         self.target_update_frequency = 1000  # Update target network every 1000 steps
+        self.fc1 = torch.utils.checkpoint.checkpoint(self.fc1)
+        self.fc2 = torch.utils.checkpoint.checkpoint(self.fc2)
+
 
         # Metrics for monitoring training progress
         self.rewards_per_episode = []  # List to store total rewards per episode
