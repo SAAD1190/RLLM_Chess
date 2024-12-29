@@ -508,7 +508,7 @@ def main():
     if mode == "train":
         print("Starting RL training...")
         rl_agent = RLAgent()
-        rl_agent.train(num_episodes=1000)  # Train the RL agent
+        rl_agent.train(num_episodes=500)  # Train the RL agent
         rl_agent.save_model()  # Save the trained model
         print("Training completed.")
     elif mode == "play":

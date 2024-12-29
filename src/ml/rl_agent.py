@@ -44,9 +44,6 @@ class RLAgent:
         self.batch_size = 32 # To reduce memory usage originally 64
         self.learn_step_counter = 0
         self.target_update_frequency = 1000  # Update target network every 1000 steps
-        self.fc1 = torch.utils.checkpoint.checkpoint(self.fc1)
-        self.fc2 = torch.utils.checkpoint.checkpoint(self.fc2)
-
 
         # Metrics for monitoring training progress
         self.rewards_per_episode = []  # List to store total rewards per episode
