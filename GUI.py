@@ -9,6 +9,10 @@ from src.Ai.minimax import find_best_move
 from src.ml.predict_move import MovePredictor
 from src.ml.rl_agent import RLAgent
 
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"  # Use dummy display
+
+
 pygame.init()
 
 WIDTH, HEIGHT = 600, 600
